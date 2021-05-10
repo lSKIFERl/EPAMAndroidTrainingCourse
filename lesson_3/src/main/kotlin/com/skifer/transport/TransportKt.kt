@@ -27,7 +27,7 @@ abstract class TransportKt(
     /**
      * Информация об объекте
      */
-    abstract fun getInfo(): String;
+    abstract fun getInfo()
 
     override fun toString(): String {
         return "(color='$color', name='$name', wheels=$wheels, capacity=$capacity)"
