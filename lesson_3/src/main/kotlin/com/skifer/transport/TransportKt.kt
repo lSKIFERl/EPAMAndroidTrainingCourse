@@ -1,5 +1,7 @@
 package com.skifer.transport
 
+import com.skifer.enums.Color
+
 /**
  * Абстрактный класс Транспорта
  */
@@ -7,7 +9,7 @@ abstract class TransportKt(
         /**
          * Цвет
          */
-        protected open var color: String,
+        protected open var color: Color,
 
         /**
          * Название
@@ -27,7 +29,7 @@ abstract class TransportKt(
     /**
      * Информация об объекте
      */
-    abstract fun getInfo()
+    abstract fun printInfo()
 
     override fun toString(): String {
         return "(color='$color', name='$name', wheels=$wheels, capacity=$capacity)"

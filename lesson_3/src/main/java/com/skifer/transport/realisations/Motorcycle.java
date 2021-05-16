@@ -29,7 +29,7 @@ public class Motorcycle extends Transport{
     }
 
     @Override
-    public void getInfo() {
+    public void printInfo() {
         System.out.println("Быстро, шумно, круто \n" + this);
     }
 

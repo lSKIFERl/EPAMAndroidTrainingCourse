@@ -35,7 +35,7 @@ public class Bus extends Transport {
     }
 
     @Override
-    public void getInfo() {
+    public void printInfo() {
         System.out.println(this);
         if (this.doubleFloored)
             System.out.println("Божечки, да это ж великлопено!");

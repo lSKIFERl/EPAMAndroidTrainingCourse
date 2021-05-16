@@ -39,7 +39,7 @@ abstract public class Transport {
         this.capacity = capacity;
     }
 
-    public abstract void getInfo();
+    public abstract void printInfo();
 
     @Override
     public String toString() {

@@ -1,17 +1,19 @@
 package com.skifer.transport.realisations
 
+import com.skifer.enums.Color
+import com.skifer.enums.MotorcycleType
 import com.skifer.transport.TransportKt
 
 class MotorcycleKt(
-        override var color: String,
+        override var color: Color,
         override var name: String,
         override var wheels: Int,
         override var capacity: Int,
-        var type: String): TransportKt(color, name, wheels, capacity) {
+        var type: MotorcycleType): TransportKt(color, name, wheels, capacity) {
 
-    constructor(name: String): this("Black", name, 2, 1, "Скутер")
+    constructor(name: String): this(Color.BLACK, name, 2, 1, MotorcycleType.SCOOTER)
 
-    override fun getInfo(){
+    override fun printInfo(){
         println("Быстро, шумно, круто \n$this")
     }
 

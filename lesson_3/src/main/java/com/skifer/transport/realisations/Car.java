@@ -21,7 +21,7 @@ public class Car extends Transport {
     }
 
     @Override
-    public void getInfo() {
+    public void printInfo() {
         System.out.println("Аааааавтомобиль! \n" + this);
     }
 }
