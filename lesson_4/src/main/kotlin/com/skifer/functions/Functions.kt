@@ -3,15 +3,16 @@ package com.skifer.functions
 import com.skifer.user.User
 import com.skifer.user.UserUiModel
 
-typealias Ui = UserUiModel
+typealias UiModel = UserUiModel
 
 /**
  * Prints all information about User
  */
 fun User.print(countOfSpaces: Int = 1, printerInside: (String) -> Unit) {
-    printerInside ("Name:${" ".repeat(countOfSpaces)}$name\n" +
-            "Last name:${" ".repeat(countOfSpaces)}$lastName\n" +
-            "Job:${" ".repeat(countOfSpaces)}$job\n"
+    val whiteSpace = " "
+    printerInside ("Name:${whiteSpace.repeat(countOfSpaces)}$name\n" +
+            "Last name:${whiteSpace.repeat(countOfSpaces)}$lastName\n" +
+            "Job:${whiteSpace.repeat(countOfSpaces)}$job\n"
     )
 }
 
@@ -19,7 +20,7 @@ fun User.print(countOfSpaces: Int = 1, printerInside: (String) -> Unit) {
  * Converts User to UserUiModel
  * @return UserUiModel object
  */
-fun User.toUi(): Ui {
+fun User.toUi(): UiModel {
     return UserUiModel(name, lastName)
 }
 
@@ -27,8 +28,9 @@ fun User.toUi(): Ui {
  * Prints all information about User
  */
 inline fun User.printInline(countOfSpaces: Int = 1, printerInside: (String) -> Unit) {
-    printerInside ("Name:${" ".repeat(countOfSpaces)}$name\n" +
-            "Last name:${" ".repeat(countOfSpaces)}$lastName\n" +
-            "Job:${" ".repeat(countOfSpaces)}$job\n"
+    val whiteSpace = " "
+    printerInside ("Name:${whiteSpace.repeat(countOfSpaces)}$name\n" +
+            "Last name:${whiteSpace.repeat(countOfSpaces)}$lastName\n" +
+            "Job:${whiteSpace.repeat(countOfSpaces)}$job\n"
     )
 }
