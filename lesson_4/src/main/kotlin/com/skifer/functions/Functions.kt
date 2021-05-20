@@ -9,10 +9,10 @@ typealias UiModel = UserUiModel
  * Prints all information about User
  */
 fun User.print(countOfSpaces: Int = 1, printerInside: (String) -> Unit) {
-    val whiteSpace = " "
-    printerInside ("Name:${whiteSpace.repeat(countOfSpaces)}$name\n" +
-            "Last name:${whiteSpace.repeat(countOfSpaces)}$lastName\n" +
-            "Job:${whiteSpace.repeat(countOfSpaces)}$job\n"
+    val whiteSpace = " ".repeat(countOfSpaces)
+    printerInside ("Name:$whiteSpace$name\n" +
+            "Last name:$whiteSpace$lastName\n" +
+            "Job:$whiteSpace$job\n"
     )
 }
 
@@ -28,9 +28,9 @@ fun User.toUi(): UiModel {
  * Prints all information about User
  */
 inline fun User.printInline(countOfSpaces: Int = 1, printerInside: (String) -> Unit) {
-    val whiteSpace = " "
-    printerInside ("Name:${whiteSpace.repeat(countOfSpaces)}$name\n" +
-            "Last name:${whiteSpace.repeat(countOfSpaces)}$lastName\n" +
-            "Job:${whiteSpace.repeat(countOfSpaces)}$job\n"
+    val whiteSpace = " ".repeat(countOfSpaces)
+    printerInside ("Name:$whiteSpace$name\n" +
+            "Last name:$whiteSpace$lastName\n" +
+            "Job:$whiteSpace$job\n"
     )
 }
