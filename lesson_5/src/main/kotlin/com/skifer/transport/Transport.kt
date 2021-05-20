@@ -29,7 +29,11 @@ sealed class Transport {
         override val VIN: String,
          /** Is this car dirty? */
         var needsCleaning: Boolean = false
-        ): Transport()
+        ): Transport() {
+        override fun toString(): String {
+            return "Car(model='$model', color=$color, VIN='$VIN', needsCleaning=$needsCleaning)"
+        }
+    }
 
     /**
      * Simple Bike class
@@ -40,6 +44,10 @@ sealed class Transport {
         override val VIN: String,
         /** Does this motorcycle need refueling? */
         var isOutOfFuel: Boolean = false
-        ): Transport()
+        ): Transport() {
+        override fun toString(): String {
+            return "MotorCycle(model='$model', color=$color, VIN='$VIN', isOutOfFuel=$isOutOfFuel)"
+        }
+    }
 
 }
