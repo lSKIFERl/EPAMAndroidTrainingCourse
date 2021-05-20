@@ -23,7 +23,7 @@ sealed class Transport {
     /**
      * Simple Car class
      */
-    class Car (
+    data class Car (
         override val model: String,
         override val color: Color,
         override val VIN: String,
@@ -38,7 +38,7 @@ sealed class Transport {
     /**
      * Simple Bike class
      */
-    class MotorCycle(
+    data class MotorCycle(
         override val model: String,
         override val color: Color,
         override val VIN: String,
