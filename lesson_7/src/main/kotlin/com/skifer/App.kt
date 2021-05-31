@@ -5,6 +5,9 @@ import com.skifer.secondtask.PushWorker
 import com.skifer.secondtask.Stack
 import com.skifer.secondtask.StackFactory
 import java.util.concurrent.Callable
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 @Volatile var stack: Stack<Int?>? = null
@@ -108,10 +111,47 @@ fun secondTask() {
     }
 }
 
+fun thirdTask() {
+    var executor = Executors.newSingleThreadExecutor()
+    for (i in 0..2) {
+        executor.execute(Runnable {
+            run { println("[1] Исполняется " + Thread.currentThread().name) }
+        })
+    }
+    executor.shutdown()
+
+    executor = Executors.newFixedThreadPool(3)
+    val invocationList = mutableListOf<Callable<String>>()
+    for (i in 0..4) {
+        invocationList.add(Callable { "[2] Исполняется " + Thread.currentThread().name })
+    }
+    val futureList: List<Future<String>> = executor.invokeAll(invocationList)
+    for (future in futureList) println(future.get())
+    executor.shutdown()
+
+    executor = Executors.newCachedThreadPool()
+    for (i in 0..2) {
+        executor.execute(Runnable {
+            run { println("[3] Исполняется " + Thread.currentThread().name) }
+        })
+    }
+    executor.shutdown()
+
+    val executorScheduled = Executors.newScheduledThreadPool(2)
+    for (i in 0..2) {
+        executorScheduled.schedule (Runnable {
+            run { println("[4] Исполняется " + Thread.currentThread().name) }
+        },0, TimeUnit.NANOSECONDS)
+        Thread.sleep(3000)
+    }
+    executorScheduled.shutdown()
+}
+
 fun main() {
     try {
         //firstTask()
-        secondTask()
+        //secondTask()
+        thirdTask()
     } catch (e: InterruptedException) {
         //e.printStackTrace()
     }
