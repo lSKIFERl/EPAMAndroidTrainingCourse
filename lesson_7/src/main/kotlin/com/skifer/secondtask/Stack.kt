@@ -8,21 +8,22 @@ class Stack<T> {
     /**
      * Элемент. Единственный и неповторимый
      */
-    private var item: T? = null
+    @Volatile private var item: T? = null
 
     /**
-     * Положить в стек элемент
+     * Положить в стек элемент [item]
      * @param item элемент
      */
-    fun push(item: T?) {
+    @Synchronized fun push(item: T?) {
         if(this.item == null)
             this.item = item
     }
 
     /**
      * Позволяет посмотреть содержимое без извлечения
+     * @return item элемент
      */
-    fun peek (): T? {
+    @Synchronized fun peek(): T? {
         return item
     }
 
@@ -30,7 +31,7 @@ class Stack<T> {
      * Вытащить элемент из стека
      * @return элемент
      */
-    fun pop(): T? {
+    @Synchronized fun pop(): T? {
         val item = this.item
         this.item = null
         return item
