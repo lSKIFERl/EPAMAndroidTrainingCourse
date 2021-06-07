@@ -4,10 +4,7 @@ import com.skifer.secondtask.PopWorker
 import com.skifer.secondtask.PushWorker
 import com.skifer.secondtask.Stack
 import com.skifer.secondtask.StackFactory
-import java.util.concurrent.Callable
-import java.util.concurrent.Executors
-import java.util.concurrent.Future
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.*
 import kotlin.random.Random
 
 @Volatile var stack: Stack<Int?>? = null
@@ -34,49 +31,26 @@ fun firstTask() {
 
 fun secondTask() {
 
-    val thread =
-        object : Callable<Stack<Int?>?>, Runnable {
-            private var stack: Stack<Int?>? = null
+    val task =
+        object : Callable<Stack<Int?>?> {
+            private var stack: Stack<Int?>? = StackFactory.create()
 
             override fun call(): Stack<Int?>? {
                 return stack
             }
-
-            override fun run() {
-                Thread.currentThread().name = "1"
-                val stackFactory = StackFactory<Int?>()
-                stackFactory.createStack()
-                stack = stackFactory.stack
-                println("Поток " + Thread.currentThread().name + " сделал и достал стек")
-            }
         }
-    val threading = Thread(thread)
+
+    val future: FutureTask<Stack<Int?>?> = FutureTask(task)
+    val threading = Thread(future)
     threading.start()
     threading.join()
+    println("Поток " + Thread.currentThread().name + " сделал и достал стек")
 
-    stack = thread.call()
+    stack = future.get()
     println("Поток " + Thread.currentThread().name + " вытащил стек")
     //
-    val thread1 = Thread(object: Runnable {
-        val pushWorker = PushWorker(stack)
-        override fun run() {
-            Thread.currentThread().name = "2"
-            while (!Thread.currentThread().isInterrupted) {
-                val random = Random.nextInt(0, 100)
-                pushWorker.push(random)
-                println("Поток " + Thread.currentThread().name + " вложил " + random)
-            }
-        }
-    })
-    val thread2 = Thread(object: Runnable {
-        val popWorker = PopWorker(stack)
-        override fun run() {
-            Thread.currentThread().name = "3"
-            while (!Thread.currentThread().isInterrupted) {
-                println("Поток " + Thread.currentThread().name + " Вытащил " + popWorker.pop())
-            }
-        }
-    })
+    val thread1 = Thread(PushWorker(stack, Random.nextInt(0, 100)))
+    val thread2 = Thread(PopWorker(stack))
 
     thread1.start()
     thread2.start()
