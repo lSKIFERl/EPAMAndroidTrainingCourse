@@ -69,9 +69,9 @@ fun secondTask() {
 fun thirdTask() {
     var executor = Executors.newSingleThreadExecutor()
     for (i in 0..2) {
-        executor.execute(Runnable {
-            run { println("[1] Исполняется " + Thread.currentThread().name) }
-        })
+        executor.execute {
+            println("[1] Исполняется " + Thread.currentThread().name)
+        }
     }
     executor.shutdown()
 
@@ -86,28 +86,17 @@ fun thirdTask() {
 
     executor = Executors.newCachedThreadPool()
     for (i in 0..2) {
-        executor.execute(Runnable {
-            run { println("[3] Исполняется " + Thread.currentThread().name) }
-        })
+        executor.execute {
+            println("[3] Исполняется " + Thread.currentThread().name)
+        }
     }
     executor.shutdown()
 
     val executorScheduled = Executors.newScheduledThreadPool(2)
     for (i in 0..2) {
-        executorScheduled.schedule (Runnable {
+        executorScheduled.schedule ({
             run { println("[4] Исполняется " + Thread.currentThread().name) }
-        },0, TimeUnit.NANOSECONDS)
-        Thread.sleep(3000)
+        },3, TimeUnit.SECONDS)
     }
     executorScheduled.shutdown()
-}
-
-fun main() {
-    try {
-        firstTask()
-        //secondTask()
-        //thirdTask()
-    } catch (e: InterruptedException) {
-        //e.printStackTrace()
-    }
 }
