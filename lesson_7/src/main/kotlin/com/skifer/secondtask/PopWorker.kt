@@ -29,7 +29,7 @@ class PopWorker<T>(
 
     override fun run() {
         Thread.currentThread().name = "PopWorker"
-        while (!Thread.currentThread().isInterrupted) {
+        while (!Thread.interrupted()) {
             println("Поток " + Thread.currentThread().name + " Вытащил " + pop())
         }
     }

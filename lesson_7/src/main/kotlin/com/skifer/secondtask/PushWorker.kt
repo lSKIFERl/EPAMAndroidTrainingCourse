@@ -23,7 +23,7 @@ class PushWorker<T>(
 
     override fun run() {
         Thread.currentThread().name = "PushWorker"
-        while (!Thread.currentThread().isInterrupted) {
+        while (!Thread.interrupted()) {
             stack?.push(item)
             println("Поток " + Thread.currentThread().name + " вложил " + item)
         }
