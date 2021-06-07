@@ -16,30 +16,14 @@ import kotlin.random.Random
  * Метод, вызывающий 2 потока на 10 секунд с инетрвалом в 5 секунд между вызовами
  */
 fun firstTask() {
-    val thread1: Thread = object : Thread() {
+    val thread1: Thread = object : Thread("Thread 1") {
         override fun run() {
-            name = "Thread 1"
-            for (i in 0..9) {
-                println(name)
-                try {
-                    sleep(1000)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-            }
+            println(name)
         }
     }
-    val thread2: Thread = object : Thread() {
+    val thread2: Thread = object : Thread("Thread 2") {
         override fun run() {
-            name = "Thread 2"
-            for (i in 0..9) {
-                println(name)
-                try {
-                    sleep(1000)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-            }
+            println(name)
         }
     }
     thread1.start()
