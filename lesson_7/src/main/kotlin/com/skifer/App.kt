@@ -7,8 +7,6 @@ import com.skifer.secondtask.StackFactory
 import java.util.concurrent.*
 import kotlin.random.Random
 
-@Volatile var stack: Stack<Int?>? = null
-
 /**
  * Метод, вызывающий 2 потока на 10 секунд с инетрвалом в 5 секунд между вызовами
  */
@@ -21,24 +19,21 @@ fun firstTask() {
     val thread1: Thread = object : Thread("Thread 1") {
         override fun run() {
             println(name)
-            Thread.sleep(5000)
+            sleep(5000)
             thread2.start()
             thread2.join()
         }
     }
     thread1.start()
+    thread1.join()
+    println("Все потоки завершились")
 }
 
 fun secondTask() {
 
-    val task =
-        object : Callable<Stack<Int?>?> {
-            private var stack: Stack<Int?>? = StackFactory.create()
+    val stack: Stack<Int?>?
 
-            override fun call(): Stack<Int?>? {
-                return stack
-            }
-        }
+    val task = Callable<Stack<Int?>?> { StackFactory.create() }
 
     val future: FutureTask<Stack<Int?>?> = FutureTask(task)
     val threading = Thread(future)
@@ -95,8 +90,8 @@ fun thirdTask() {
     val executorScheduled = Executors.newScheduledThreadPool(2)
     for (i in 0..2) {
         executorScheduled.schedule ({
-            run { println("[4] Исполняется " + Thread.currentThread().name) }
-        },3, TimeUnit.SECONDS)
+            println("[4] Исполняется " + Thread.currentThread().name)
+        }, (3 * i).toLong(), TimeUnit.SECONDS)
     }
     executorScheduled.shutdown()
 }

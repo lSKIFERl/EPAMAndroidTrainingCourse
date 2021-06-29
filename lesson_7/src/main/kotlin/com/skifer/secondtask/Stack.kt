@@ -15,7 +15,9 @@ class Stack<T> {
      * @param item элемент
      */
     @Synchronized fun push(item: T?) {
-        if(this.item == null)
+        while (this.item != null) {
+            Thread.yield()
+        }
             this.item = item
     }
 
@@ -23,7 +25,7 @@ class Stack<T> {
      * Позволяет посмотреть содержимое без извлечения
      * @return item элемент
      */
-    @Synchronized fun peek(): T? {
+    fun peek(): T? {
         return item
     }
 
@@ -32,7 +34,11 @@ class Stack<T> {
      * @return элемент
      */
     @Synchronized fun pop(): T? {
+        while (this.item == null) {
+            Thread.yield()
+        }
         val item = this.item
+        println("Поток " + Thread.currentThread().name + " Вытащил " + item)
         this.item = null
         return item
     }
